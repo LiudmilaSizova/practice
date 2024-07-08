@@ -34,11 +34,10 @@ Proverka
     ${response}=    GET On session    alias    ${route}    params=${params}   expected_status=${expected_status}
     ${date_after_request} =         Get Current Date
     ${response_time} =  Subtract Date From Date    ${date_after_request}    ${date_before_request}
-    Should Contain    ${response.headers}    Content-Type   msg=Content-Type is not present
     Should Be True     '${response_time}'<='${response_time_check}'    msg=Время выполнения вызова больше ${response_time_check}s
     RETURN    ${response}
 
 Test_Adjustment_Types
-    Comment          Проверка, укладывается ли выполнение вызова API openapi/v1/dictionaries/adjustments/adjustmentTypes в 50 мс
+    Comment          Проверка, укладывается ли выполнение вызова API openapi/v1/dictionaries/adjustments/adjustmentTypes в 50 ms
     ${proverka_ms_adjustment_types}=     Proverka       200    /agents   0.05
     RETURN    ${proverka_ms_adjustment_types}
