@@ -1,0 +1,79 @@
+{
+    "type": "object",
+    "required": [
+        "items",
+        "listInfo"
+    ],
+    "properties": {
+        "items": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": [
+                    "agentId",
+                    "agentName",
+                    "agentContractNumber",
+                    "externalAgentId",
+                    "agentBalances",
+                    "serviceProvider"
+                ],
+                "properties": {
+                    "agentId": {
+                        "type": "integer"
+                    },
+                    "agentName": {
+                        "type": "string"
+                    },
+                    "agentContractNumber": {
+                        "type": "string"
+                    },
+                    "externalAgentId": {
+                        "type": "integer"
+                    },
+                    "agentBalances": {
+                        "type": "array",
+                        "items": {}
+                    },
+                    "serviceProvider": {
+                        "type": "object",
+                        "required": [
+                            "serviceProviderId",
+                            "code",
+                            "name"
+                        ],
+                        "properties": {
+                            "serviceProviderId": {
+                                "type": "integer"
+                            },
+                            "code": {
+                                "type": "string"
+                            },
+                            "name": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "listInfo": {
+            "type": "object",
+            "required": [
+                "count",
+                "offset",
+                "limit"
+            ],
+            "properties": {
+                "count": {
+                    "type": "integer"
+                },
+                "offset": {
+                    "type": "integer"
+                },
+                "limit": {
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}
