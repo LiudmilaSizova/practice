@@ -13,11 +13,7 @@ ${PASSWORD}=     1111
 
 *** Test Cases ***
 Test_Adjustment_Types
-    Comment         API openapi/v1/dictionaries/adjustments/adjustmentTypes Получение всех типов корректировок
     ${adjustment_types}=      Test_Adjustment_Types
-
-    Comment         Типы корректировок
-    Log       ${adjustment_types.json()}
 
 *** Keywords ***
 Suite Setup
@@ -30,14 +26,22 @@ Suite Setup
 
 Proverka
     [Arguments]    ${expected_status}    ${route}    ${response_time_check}    ${params}=${None}
+    Comment       Получение времени перед выполнением вызова
     ${date_before_request} =         Get Current Date
+
+    Comment       Выполнение вызова API openapi/v1/dictionaries/adjustments/adjustmentTypes
     ${response}=    GET On session    alias    ${route}    params=${params}   expected_status=${expected_status}
+
+    Comment          Проверка наличия хедера Content-Type
+    Should Contain    ${response.headers}    Content-Type   msg=Хедер Content-Type отсутствует
+
+    Comment          Проверка времени выполнения
     ${date_after_request} =         Get Current Date
     ${response_time} =  Subtract Date From Date    ${date_after_request}    ${date_before_request}
     Should Be True     '${response_time}'<='${response_time_check}'    msg=Время выполнения вызова больше ${response_time_check}s
     RETURN    ${response}
 
 Test_Adjustment_Types
-    Comment          Проверка, укладывается ли выполнение вызова API openapi/v1/dictionaries/adjustments/adjustmentTypes в 50 ms
-    ${proverka_ms_adjustment_types}=     Proverka       200    /agents   0.05
+    Comment         API openapi/v1/dictionaries/adjustments/adjustmentTypes Получение всех типов корректировок
+    ${proverka_ms_adjustment_types}=     Proverka       200    /dictionaries/adjustments/adjustmentTypes   0.05
     RETURN    ${proverka_ms_adjustment_types}
